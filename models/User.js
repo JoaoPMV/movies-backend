@@ -2,25 +2,40 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
       type: String,
-      required: true,
+      required: [true, "Primeiro nome é obrigatório."],
+      trim: true,
     },
-
+    lastName: {
+      type: String,
+      required: [true, "Sobrenome é obrigatório."],
+      trim: true,
+    },
     email: {
       type: String,
+      required: [true, "E-mail é obrigatório."],
       unique: true,
-      required: true,
+      lowercase: true,
+      trim: true,
     },
-
     password: {
       type: String,
-      required: true,
+      required: [true, "Senha é obrigatória."],
+      minlength: 6,
+    },
+
+    // Campos para reset de senha
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+    resetPasswordExpires: {
+      type: Date,
+      default: null,
     },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
 
 export default mongoose.model("User", userSchema);
