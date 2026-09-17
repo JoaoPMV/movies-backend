@@ -31,6 +31,13 @@ const login = async (email, password) => {
     throw new Error("Usuário ou senha inválidos.");
   }
 
+  const loginDate = new Date();
+
+  user.lastLogin = loginDate;
+  user.loginHistory.push(loginDate);
+
+  await user.save();
+
   return user;
 };
 
